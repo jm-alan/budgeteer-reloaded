@@ -13,4 +13,14 @@ router.get('/', restoreOrReject, asyncHandler(async (req, res) => {
   res.json({ accounts });
 }));
 
+router.post('/', restoreOrReject, asyncHandler(async (req, res) => {
+  const { user, body } = req;
+
+  for (const key in body) if (key !== 'balance') delete body[key];
+
+  const account = await user.createAccount(body);
+
+  res.json({ account });
+}));
+
 export default router;
