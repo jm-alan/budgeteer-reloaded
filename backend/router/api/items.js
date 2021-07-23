@@ -25,4 +25,25 @@ router.get('/:accountId(\\d+)/', restoreOrReject, asyncHandler(async (req, res) 
   res.json({ items });
 }));
 
+router.post('/:accountId(\\d+)/', restoreOrReject, asyncHandler(async (req, res) => {
+  const { user, body, params: { accountId } } = req;
+
+  if (Object.keys(body).length > 6) res.sendStatus(400);
+
+  for (const key in body) {
+    if (
+      !['recurring', 'isIncome', 'amount', 'effectiveDate', 'startDate', 'endDate']
+        .some(prop => prop === key)
+    ) delete body[key];
+  }
+
+  const account = await user.findAccountByPK(accountId);
+
+  if (!account) res.status(400).json({ errors: ['An account with that ID belonging to this user was not found in the database.'] });
+
+  const item = await account.postItem(body);
+
+  res.json({ item });
+}));
+
 export default router;
