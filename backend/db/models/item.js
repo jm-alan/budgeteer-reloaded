@@ -21,6 +21,11 @@ module.exports = (sequelize, { DataTypes, fn }) => {
       type: DataTypes.DATE,
       defaultValue: fn('now')
     },
+    startDate: {
+      type: DataTypes.DATE,
+      defaultValue: fn('now')
+    },
+    endDate: DataTypes.DATE,
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false
