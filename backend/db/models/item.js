@@ -9,6 +9,8 @@ module.exports = (sequelize, { DataTypes, fn }) => {
   }
 
   Item.init({
+    name: DataTypes.STRING(100),
+    description: DataTypes.TEXT,
     recurring: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
