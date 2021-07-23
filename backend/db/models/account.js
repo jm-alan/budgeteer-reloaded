@@ -2,6 +2,10 @@ const { Model } = require('sequelize');
 
 module.exports = (sequelize, { DataTypes, fn }) => {
   class Account extends Model {
+    async postItem (itemBody) {
+      return await this.createItem({ ...itemBody, userId: this.userId });
+    }
+
     static associate ({ User, Item }) {
       Account.belongsTo(User, { foreignKey: 'userId' });
       Account.hasMany(Item, { foreignKey: 'accountId' });
