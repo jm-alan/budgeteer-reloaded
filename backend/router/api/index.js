@@ -1,10 +1,14 @@
+import { Router } from 'express';
+
 import sessionRouter from './session';
 import userRouter from './users';
-import { Router } from 'express';
+import accountsRouter from './accounts';
+
 const router = Router();
 
 router.use('/session', sessionRouter);
 router.use('/users', userRouter);
+router.use('/accounts', accountsRouter);
 
 router.get('/csrf/restore/', (req, res) => {
   const token = req.csrfToken();
