@@ -13,7 +13,7 @@ module.exports = (sequelize, { DataTypes, fn }) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false
     },
-    income: {
+    isIncome: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
     },
