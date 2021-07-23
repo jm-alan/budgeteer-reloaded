@@ -2,8 +2,9 @@ const { Model } = require('sequelize');
 
 module.exports = (sequelize, { DataTypes, fn }) => {
   class Item extends Model {
-    static associate ({ User }) {
+    static associate ({ User, Account }) {
       Item.belongsTo(User, { foreignKey: 'userId' });
+      Item.belongsTo(Account, { foreignKey: 'accountId' });
     }
   }
 
@@ -31,6 +32,13 @@ module.exports = (sequelize, { DataTypes, fn }) => {
       allowNull: false,
       references: {
         model: 'Users'
+      }
+    },
+    accountId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Accounts'
       }
     },
     createdAt: {
