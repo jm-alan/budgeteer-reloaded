@@ -65,4 +65,16 @@ router.patch('/:id(\\d+)/', restoreOrReject, asyncHandler(async (req, res) => {
   res.json({ item });
 }));
 
+router.delete('/:id(\\d+)', restoreOrReject, asyncHandler(async (req, res) => {
+  const { user, params: { id } } = req;
+
+  const item = await user.findItemByPK(id);
+
+  if (!item) return res.status(400).json({ errors: ['An item with that ID belonging to this user was not found in the database.'] });
+
+  await item.destroy();
+
+  res.sendStatus(200);
+}));
+
 export default router;
