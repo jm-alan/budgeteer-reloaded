@@ -23,4 +23,20 @@ router.post('/', restoreOrReject, asyncHandler(async (req, res) => {
   res.json({ account });
 }));
 
+router.patch('/:id(\\d+)/', restoreOrReject, asyncHandler(async (req, res) => {
+  const { user, body, params: { id } } = req;
+
+  const account = await user.findAccountByPK(id);
+
+  if (!account) return res.json({ account: null });
+
+  if (!(await user.hasAccount(account))) res.json({ account: null });
+
+  for (const key in body) if (key !== 'balance') delete body[key];
+
+  await account.update(body);
+
+  res.json({ account });
+}));
+
 export default router;
