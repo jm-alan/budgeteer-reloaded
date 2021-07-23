@@ -27,11 +27,11 @@ module.exports = (sequelize, { DataTypes, fn }) => {
     }
 
     async findItemByPK (id) {
-      return await this.getItems({ where: { id } })[0] ?? null;
+      return (await this.getItems({ where: { id } }))[0] ?? null;
     }
 
     async findAccountByPK (id) {
-      return await this.getAccounts({ where: { id } })[0] ?? null;
+      return (await this.getAccounts({ where: { id } }))[0] ?? null;
     }
 
     static async LogIn ({ identification, password }) {
