@@ -8,7 +8,7 @@ const router = Router();
 router.get('/', restoreOrReject, asyncHandler(async (req, res) => {
   const { user } = req;
 
-  const items = (await user.getItems()).toMapedObject('id');
+  const items = (await user.getItems()).toMappedObject('id');
 
   res.json({ items });
 }));
