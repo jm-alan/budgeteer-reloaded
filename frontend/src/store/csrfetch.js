@@ -39,7 +39,14 @@ class CsrfFetch {
     const res = await window.fetch(...this.options);
     try {
       if (res.status >= 400) throw await res.json();
-      return await res.json();
+      else {
+        try {
+          return await res.json();
+        } catch (err) {
+          if (res.status === 200) return {};
+          throw res;
+        }
+      }
     } catch ({ errors }) {
       this.dispatch(SetErrors(errors || this.genericErrors));
       return {};
