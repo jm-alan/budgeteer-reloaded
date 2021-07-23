@@ -30,13 +30,23 @@ router.patch('/:id(\\d+)/', restoreOrReject, asyncHandler(async (req, res) => {
 
   if (!account) return res.json({ account: null });
 
-  if (!(await user.hasAccount(account))) res.json({ account: null });
-
   for (const key in body) if (key !== 'balance') delete body[key];
 
   await account.update(body);
 
   res.json({ account });
+}));
+
+router.delete('/:id(\\d+)/', restoreOrReject, asyncHandler(async (req, res) => {
+  const { user, params: { id } } = req;
+
+  const account = await user.findAccountByPK(id);
+
+  if (!account) return res.status(400).json({ errors: ['An account with that ID belonging to this user was not found in the database.'] });
+
+  await account.destroy();
+
+  res.sendStatus(200);
 }));
 
 export default router;
