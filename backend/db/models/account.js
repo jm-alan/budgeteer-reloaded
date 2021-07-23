@@ -13,6 +13,8 @@ module.exports = (sequelize, { DataTypes, fn }) => {
   }
 
   Account.init({
+    name: DataTypes.STRING(100),
+    description: DataTypes.TEXT,
     balance: DataTypes.STRING,
     userId: {
       type: DataTypes.INTEGER,
