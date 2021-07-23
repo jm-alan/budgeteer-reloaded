@@ -30,6 +30,10 @@ module.exports = (sequelize, { DataTypes, fn }) => {
       return await this.getItems({ where: { id } })[0] ?? null;
     }
 
+    async findAccountByPK (id) {
+      return await this.getAccounts({ where: { id } })[0] ?? null;
+    }
+
     static async LogIn ({ identification, password }) {
       const errors = [];
       if (!identification) errors.push(new ValidationErrorItem('Please provide a username or email'));
