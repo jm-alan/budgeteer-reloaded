@@ -47,10 +47,11 @@ module.exports = (sequelize, { DataTypes, fn }) => {
       return (await newUser.save()).info;
     }
 
-    static associate (models) {
-
+    static associate ({ Item }) {
+      User.hasMany(Item, { foreignKey: 'userId' });
     }
   }
+
   User.init({
     username: {
       type: DataTypes.STRING,
