@@ -52,15 +52,20 @@ module.exports = (sequelize, { DataTypes, fn }) => {
 
     static async SignUp ({ username, email, password }) {
       const errors = [];
-      if (await User.findOne({ where: { username } })) errors.push(new ValidationErrorItem('An account already exists with that username'));
-      if (await User.findOne({ where: { email } })) errors.push(new ValidationErrorItem('An account already exists with that email'));
+      if (await User.findOne({ where: { username } })) {
+        errors.push(new ValidationErrorItem('An account already exists with that username'));
+      }
+      if (await User.findOne({ where: { email } })) {
+        errors.push(new ValidationErrorItem('An account already exists with that email'));
+      }
       if (errors.length) throw new ValidationError('Could not accept identification', errors);
       const newUser = new User({ username, email, password });
       return (await newUser.save()).info;
     }
 
-    static associate ({ Item }) {
+    static associate ({ Item, Account }) {
       User.hasMany(Item, { foreignKey: 'userId' });
+      User.hasMany(Account, { foreignKey: 'userId' });
     }
   }
 
