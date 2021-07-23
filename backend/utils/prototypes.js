@@ -9,3 +9,7 @@ String.prototype.truncateUntil = function (pattern) {
   while (!out.match(pattern)) out = out.slice(0, out.length - 1);
   return out;
 };
+
+Array.prototype.toMappedObject = function (key) {
+  return this.reduce((acc, next) => (acc[next[key]] = next) && acc, {});
+};
