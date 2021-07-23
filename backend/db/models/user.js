@@ -18,6 +18,18 @@ module.exports = (sequelize, { DataTypes, fn }) => {
       return { id, firstName, username, email };
     }
 
+    async getRecurringItems () {
+      return await this.getItems({ where: { recurring: true } });
+    }
+
+    async getSingleItems () {
+      return await this.getItems({ where: { recurring: false } });
+    }
+
+    async findItemByPK (id) {
+      return await this.getItems({ where: { id } })[0] ?? null;
+    }
+
     static async LogIn ({ identification, password }) {
       const errors = [];
       if (!identification) errors.push(new ValidationErrorItem('Please provide a username or email'));
