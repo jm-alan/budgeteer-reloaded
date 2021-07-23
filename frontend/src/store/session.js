@@ -1,4 +1,6 @@
 import csrfetch from './csrfetch';
+import { TearDown } from './modal';
+import { HideModal } from './UX';
 
 const SET_USER = 'session/SET';
 
@@ -15,11 +17,19 @@ export const RestoreUser = () => async dispatch => {
 export const LogIn = (identification, password) => async dispatch => {
   const { user } = await csrfetch.post('/api/session/', { identification, password });
   dispatch(setSession(user));
+  if (user) {
+    dispatch(TearDown());
+    dispatch(HideModal());
+  }
 };
 
 export const SignUp = (username, email, password) => async dispatch => {
   const { user } = await csrfetch.post('/api/users/', { username, email, password });
   dispatch(setSession(user));
+  if (user) {
+    dispatch(TearDown());
+    dispatch(HideModal());
+  }
 };
 
 export const LogOut = () => async dispatch => {
