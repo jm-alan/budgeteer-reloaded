@@ -1,8 +1,7 @@
 import { useState } from 'react';
 
-export default function HotswapInput ({ startingValue, onSubmitConstructor }) {
+export default function HotswapInput ({ startingValue, contents, setContents, onSubmitConstructor }) {
   const [edit, setEdit] = useState(false);
-  const [contents, setContents] = useState(startingValue);
 
   return edit
     ? (
