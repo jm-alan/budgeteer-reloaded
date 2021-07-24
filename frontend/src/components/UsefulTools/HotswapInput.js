@@ -3,10 +3,12 @@ import { useState } from 'react';
 export default function HotswapInput ({ contents, setContents, onSubmitConstructor }) {
   const [edit, setEdit] = useState(false);
 
+  const revert = () => setEdit(false);
+
   return edit
     ? (
       <form
-        onSubmit={onSubmitConstructor(() => setEdit(false))}
+        onSubmit={onSubmitConstructor(revert)}
       >
         <input
           value={contents}
