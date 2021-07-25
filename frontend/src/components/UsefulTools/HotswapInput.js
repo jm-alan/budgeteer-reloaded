@@ -24,6 +24,7 @@ export default function HotswapInput ({ type = 'input', contents, setContents, o
                     value={contents}
                     onChange={({ target: { value } }) => setContents(value)}
                     required
+                    maxLength={100}
                     disabled={loading}
                     className='hotswap-input'
                   />
