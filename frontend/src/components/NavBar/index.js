@@ -7,6 +7,8 @@ import { ShowModal } from '../../store/UX';
 import LoginForm from '../Auth/LoginForm';
 import SignupForm from '../Auth/SignupForm';
 
+import './index.css';
+
 export default function NavBar () {
   const dispatch = useDispatch();
 
@@ -34,6 +36,9 @@ export default function NavBar () {
             </Link>
             <Link to='/users/me/'>
               My Profile
+            </Link>
+            <Link to='/accounts/'>
+              My Accounts
             </Link>
             <button onClick={logOut}>
               Log Out
