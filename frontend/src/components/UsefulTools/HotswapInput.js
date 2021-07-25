@@ -1,21 +1,46 @@
 import { useState } from 'react';
 
-export default function HotswapInput ({ contents, setContents, onSubmitConstructor }) {
+export default function HotswapInput ({ type = 'input', contents, setContents, onSubmitConstructor }) {
   const [edit, setEdit] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const revert = () => setEdit(false);
+  const on = () => setLoading(true);
+  const after = () => {
+    setLoading(false);
+    setEdit(false);
+  };
 
   return edit
     ? (
       <form
-        onSubmit={onSubmitConstructor(revert)}
+        onSubmit={onSubmitConstructor(on, after)}
       >
-        <input
-          value={contents}
-          onChange={({ target: { value } }) => setContents(value)}
-          required
-          className='hotswap-input'
-        />
+        {(() => (
+          (
+            type === 'input' && (
+              <input
+                value={contents}
+                onChange={({ target: { value } }) => setContents(value)}
+                required
+                className='hotswap-input'
+              />
+            )
+          ) || (
+            type === 'textarea' && (
+              <textarea
+                value={contents}
+                onChange={({ target: { value } }) => setContents(value)}
+                required
+                className='hotswap-input large'
+              />
+            ))
+        ))()}
+        <button
+          type='submit'
+          disabled={loading}
+        >
+          {loading ? 'Loading...' : 'Done'}
+        </button>
       </form>
       )
     : (
