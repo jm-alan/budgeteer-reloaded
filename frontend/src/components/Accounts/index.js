@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import SingleAccount from './SingleAccount';
@@ -16,7 +17,7 @@ export default function Accounts () {
   }, [dispatch]);
 
   return loaded && (
-    <div className='page-container'>
+    <div className='page-container accounts'>
       <div className='account-list-sidebar'>
         <button className='new-account'>
           + New Account
@@ -24,6 +25,11 @@ export default function Accounts () {
         {accounts.map((account, idx) => (
           <SingleAccount account={account} key={idx} />
         ))}
+      </div>
+      <div className='account-container'>
+        <Route path='/accounts/:accountId/'>
+          <h1>ACCOUNT</h1>
+        </Route>
       </div>
     </div>
   );
