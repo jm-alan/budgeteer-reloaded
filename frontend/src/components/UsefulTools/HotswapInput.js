@@ -46,19 +46,20 @@ export default function HotswapInput ({ type = 'input', maxLength, contents, set
               type='submit'
               disabled={loading}
             >
-              {loading ? 'Loading...' : 'Done'}
+              Done
             </button>
           </form>
           )
         : (
           <>
-            <div className='hotswap-input-text'>
+            <div className='hotswap-text'>
               {contents}
             </div>
             <button
               onClick={() => setEdit(true)}
-              className='hotswap-input-edit'
-            >Edit
+              className='hotswap-edit'
+            >
+              Edit Name
             </button>
           </>
           )}
