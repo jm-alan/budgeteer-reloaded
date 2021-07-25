@@ -15,6 +15,7 @@ export default function HotswapInput ({ type = 'input', contents, setContents, o
       {edit
         ? (
           <form
+            className='hotswap-form'
             onSubmit={onSubmitConstructor(on, after)}
           >
             {(() => (
