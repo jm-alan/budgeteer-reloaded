@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import SingleAccount from './SingleAccount';
+import SingleAccountPage from './SingleAccountPage';
 import { GetAccounts, UnloadAccounts } from '../../store/accounts';
 
 export default function Accounts () {
@@ -28,7 +29,7 @@ export default function Accounts () {
       </div>
       <div className='account-container'>
         <Route path='/accounts/:accountId/'>
-          <h1>ACCOUNT</h1>
+          <SingleAccountPage />
         </Route>
       </div>
     </div>
