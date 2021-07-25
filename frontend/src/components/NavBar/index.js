@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { SetModal } from '../../store/modal';
 import { LogOut } from '../../store/session';
 import { ShowModal } from '../../store/UX';
@@ -31,15 +31,15 @@ export default function NavBar () {
       {user
         ? (
           <>
-            <Link to='/'>
+            <NavLink to='/'>
               Home
-            </Link>
-            <Link to='/users/me/'>
+            </NavLink>
+            <NavLink to='/users/me/'>
               My Profile
-            </Link>
-            <Link to='/accounts/'>
+            </NavLink>
+            <NavLink to='/accounts/'>
               My Accounts
-            </Link>
+            </NavLink>
             <button onClick={logOut}>
               Log Out
             </button>
