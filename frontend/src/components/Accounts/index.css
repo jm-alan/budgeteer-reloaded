@@ -1,0 +1,36 @@
+.account-list-sidebar {
+  border-right: 1px solid steelblue;
+  position: absolute;
+  left: 0;
+  width: 15vw;
+  height: var(--under-navbar);
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.single-account-container {
+  border: 1px solid steelblue;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.single-account-container > .hotswap-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.new-account {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background-color: steelblue;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 15px;
+  font-weight: 550;
+}

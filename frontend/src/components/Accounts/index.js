@@ -16,10 +16,15 @@ export default function Accounts () {
   }, [dispatch]);
 
   return loaded && (
-    <div className='account-list-sidebar'>
-      {accounts.map((account, idx) => (
-        <SingleAccount account={account} key={idx} />
-      ))}
+    <div className='page-container'>
+      <div className='account-list-sidebar'>
+        <button className='new-account'>
+          + New Account
+        </button>
+        {accounts.map((account, idx) => (
+          <SingleAccount account={account} key={idx} />
+        ))}
+      </div>
     </div>
   );
 }
