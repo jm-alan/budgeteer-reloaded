@@ -16,5 +16,10 @@ export default function SingleAccountPage () {
     return () => dispatch(DeselectACcount());
   }, [dispatch, accountId]);
 
-  return account && <h1>ACCOUNT LOADED</h1>;
+  return account && (
+    <div className='account-header'>
+      <h1>{account.name}</h1>
+      <h1>{account.balance}</h1>
+    </div>
+  );
 }
