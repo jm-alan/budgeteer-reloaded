@@ -1,6 +1,9 @@
+.page-container.accounts {
+  display: flex;
+}
+
 .account-list-sidebar {
   border-right: 1px solid steelblue;
-  position: absolute;
   left: 0;
   width: 15vw;
   height: var(--under-navbar);
@@ -9,20 +12,59 @@
 }
 
 .single-account-container {
+  cursor: pointer;
   border: 1px solid steelblue;
+  width: 100%;
+  height: 75px;
   padding: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 5px;
+  box-shadow: 5px 5px 5px darkgrey;
 }
 
 .single-account-container > .hotswap-container {
+  height: 100%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+.hotswap-form {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.single-account-container :is(.hotswap-input, .hotswap-text) {
+  height: 100%;
+  max-width: calc(15vw - 80px);
+  min-width: calc(15vw - 80px);
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.single-account-container button {
+  width: 45px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background-color: steelblue;
+  color: white;
+  border-radius: 5px;
+  font-weight: 550;
+}
+
 .new-account {
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,8 +72,12 @@
   background-color: steelblue;
   border: none;
   border-radius: 5px;
-  padding: 5px;
+  padding: 10px;
   font-size: 15px;
   font-weight: 550;
   margin-bottom: 10px;
+}
+
+.account-container {
+  padding: 10px;
 }
