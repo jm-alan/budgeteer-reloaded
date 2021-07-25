@@ -5,14 +5,12 @@ export const useHotswap = (key, initialValue, action, ...necessaryArgs) => {
   const dispatch = useDispatch();
   const [value, setValue] = useState(initialValue);
   const mutable = useRef({
-    [key]: {
-      value,
-      setValue
-    }
+    value,
+    setValue
   });
-  const setConstructor = key => value => {
-    mutable.current[key] = value;
-    mutable.current[key].setValue(value);
+  const mutableSetter = value => {
+    mutable.current.value = value;
+    mutable.current.setValue(value);
   };
   const onSubmitConstructor = (key, { value }) => (on, after) => e => {
     e.preventDefault();
@@ -20,5 +18,5 @@ export const useHotswap = (key, initialValue, action, ...necessaryArgs) => {
     const toUpdate = { [key]: value };
     dispatch(action(...necessaryArgs, toUpdate, after));
   };
-  return [value, setConstructor(key), onSubmitConstructor(key, mutable.current[key])];
+  return [value, mutableSetter, onSubmitConstructor(key, mutable.current)];
 };
