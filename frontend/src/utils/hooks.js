@@ -20,5 +20,5 @@ export const useHotswap = (key, initialValue, action) => {
     const toUpdate = { [key]: value };
     dispatch(action(toUpdate, after));
   };
-  return [setConstructor(key), onSubmitConstructor(key, mutable.current[key])];
+  return [value, setConstructor(key), onSubmitConstructor(key, mutable.current[key])];
 };
