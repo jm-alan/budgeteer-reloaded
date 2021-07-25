@@ -24,10 +24,10 @@ export default function App () {
       <NavBar />
       <div id='main-site-container'>
         <Switch>
-          <Route path='/accounts/'>
+          <Route exact path='/accounts/'>
             <Accounts />
           </Route>
-          <Route path='/'>
+          <Route exact path='/home'>
             <Home />
           </Route>
         </Switch>

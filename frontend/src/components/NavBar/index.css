@@ -20,3 +20,9 @@ nav > * {
   padding: 5px;
   border-radius: 5px;
 }
+
+nav > *.active {
+  border: 1px solid steelblue;
+  background-color: white;
+  color: steelblue;
+}

@@ -31,7 +31,7 @@ export default function NavBar () {
       {user
         ? (
           <>
-            <NavLink to='/'>
+            <NavLink to='/home'>
               Home
             </NavLink>
             <NavLink to='/users/me/'>
