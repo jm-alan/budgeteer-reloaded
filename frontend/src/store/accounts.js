@@ -36,12 +36,13 @@ export const CreateAccount = newAccount => async dispatch => {
   dispatch(createAccount(account));
 };
 
-export const UpdateAccount = (accountId, data) => async dispatch => {
+export const UpdateAccount = (accountId, data, after) => async dispatch => {
   const { account } = await csrfetch.patch(`/api/accounts/${accountId}/`, data);
   dispatch(updateAccount(account));
+  setTimeout(after, 250);
 };
 
-export const DeleteAccount = accountId => async dispatch => {
+export const DeleteAccount = (accountId) => async dispatch => {
   await csrfetch.delete(`/api/accounts/${accountId}/`);
   dispatch(deleteAccount(accountId));
 };
@@ -52,7 +53,7 @@ export const UnloadAccounts = () => ({
 
 export default function reducer (
   state = { all: {}, current: null, loaded: false },
-  { type, accounts }
+  { type, accountId, account, accounts }
 ) {
   switch (type) {
     case LOAD_ALL:
@@ -62,6 +63,34 @@ export default function reducer (
           ...accounts
         },
         loaded: true
+      };
+    case CREATE:
+      return {
+        ...state,
+        all: {
+          ...state.all,
+          [account.id]: {
+            ...account
+          }
+        }
+      };
+    case UPDATE:
+      return {
+        ...state,
+        all: {
+          ...state.all,
+          [account.id]: {
+            ...account
+          }
+        }
+      };
+    case DELETE:
+      delete state.all[accountId];
+      return {
+        ...state,
+        all: {
+          ...state.all
+        }
       };
     case UNLOAD:
       return {
