@@ -14,8 +14,8 @@ module.exports = (sequelize, { DataTypes, fn }) => {
     }
 
     get info () {
-      const { id, firstName, username, email } = this;
-      return { id, firstName, username, email };
+      const { id, username, email } = this;
+      return { id, username, email };
     }
 
     async getRecurringItems () {
@@ -63,8 +63,7 @@ module.exports = (sequelize, { DataTypes, fn }) => {
         errors.push(new ValidationErrorItem('An account already exists with that email'));
       }
       if (errors.length) throw new ValidationError('Could not accept identification', errors);
-      const newUser = new User({ username, email, password });
-      return (await newUser.save()).info;
+      return (await User.create({ username, email, password })).info;
     }
 
     static associate ({ Item, Account }) {
