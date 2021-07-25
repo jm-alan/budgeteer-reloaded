@@ -5,6 +5,8 @@ const UNLOAD = 'accounts/UNLOAD';
 const CREATE = 'accounts/CREATE';
 const UPDATE = 'accounts/UPDATE';
 const DELETE = 'accounts/DELETE';
+const SELECT = 'accounts/SELECT';
+const DESELECT = 'accounts/DESELECT';
 
 const setAccounts = accounts => ({
   type: LOAD_ALL,
@@ -24,6 +26,15 @@ const updateAccount = account => ({
 const deleteAccount = accountId => ({
   type: DELETE,
   accountId
+});
+
+export const SelectAccount = accountId => ({
+  type: SELECT,
+  accountId
+});
+
+export const DeselectACcount = () => ({
+  type: DESELECT
 });
 
 export const GetAccounts = () => async dispatch => {
@@ -56,6 +67,16 @@ export default function reducer (
   { type, accountId, account, accounts }
 ) {
   switch (type) {
+    case SELECT:
+      return {
+        ...state,
+        current: state.all[accountId]
+      };
+    case DESELECT:
+      return {
+        ...state,
+        current: null
+      };
     case LOAD_ALL:
       return {
         ...state,
