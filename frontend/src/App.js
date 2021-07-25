@@ -22,14 +22,16 @@ export default function App () {
   return loaded && (
     <>
       <NavBar />
-      <Switch>
-        <Route path='/accounts/'>
-          <Accounts />
-        </Route>
-        <Route path='/'>
-          <Home />
-        </Route>
-      </Switch>
+      <div id='main-site-container'>
+        <Switch>
+          <Route path='/accounts/'>
+            <Accounts />
+          </Route>
+          <Route path='/'>
+            <Home />
+          </Route>
+        </Switch>
+      </div>
     </>
   );
 }
