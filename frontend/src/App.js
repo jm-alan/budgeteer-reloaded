@@ -24,7 +24,7 @@ export default function App () {
       <NavBar />
       <div id='main-site-container'>
         <Switch>
-          <Route exact path='/accounts/'>
+          <Route path='/accounts/'>
             <Accounts />
           </Route>
           <Route exact path='/home'>
