@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 
-export const useHotswap = (key, initialValue, action) => {
+export const useHotswap = (key, initialValue, action, ...necessaryArgs) => {
   const dispatch = useDispatch();
   const [value, setValue] = useState(initialValue);
   const mutable = useRef({
@@ -18,7 +18,7 @@ export const useHotswap = (key, initialValue, action) => {
     e.preventDefault();
     on();
     const toUpdate = { [key]: value };
-    dispatch(action(toUpdate, after));
+    dispatch(action(...necessaryArgs, toUpdate, after));
   };
   return [value, setConstructor(key), onSubmitConstructor(key, mutable.current[key])];
 };
