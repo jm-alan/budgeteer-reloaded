@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function HotswapInput ({ type = 'input', contents, setContents, onSubmitConstructor }) {
+export default function HotswapInput ({ type = 'input', maxLength, contents, setContents, onSubmitConstructor }) {
   const [edit, setEdit] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -25,7 +25,7 @@ export default function HotswapInput ({ type = 'input', contents, setContents, o
                     value={contents}
                     onChange={({ target: { value } }) => setContents(value)}
                     required
-                    maxLength={100}
+                    maxLength={maxLength}
                     disabled={loading}
                     className='hotswap-input'
                   />
@@ -37,6 +37,7 @@ export default function HotswapInput ({ type = 'input', contents, setContents, o
                     onChange={({ target: { value } }) => setContents(value)}
                     required
                     disabled={loading}
+                    maxLength={maxLength}
                     className='hotswap-input large'
                   />
                 ))
