@@ -16,7 +16,7 @@ router.get('/', restoreOrReject, asyncHandler(async (req, res) => {
 router.post('/', restoreOrReject, asyncHandler(async (req, res) => {
   const { user, body } = req;
 
-  for (const key in body) if (key !== 'balance') delete body[key];
+  for (const key in body) if (!['name', 'balance', 'description'].some(validKey => key === validKey)) delete body[key];
 
   const account = await user.createAccount(body);
 
@@ -30,7 +30,7 @@ router.patch('/:id(\\d+)/', restoreOrReject, asyncHandler(async (req, res) => {
 
   if (!account) return res.json({ account: null });
 
-  for (const key in body) if (key !== 'balance') delete body[key];
+  for (const key in body) if (!['name', 'balance', 'description'].some(validKey => key === validKey)) delete body[key];
 
   await account.update(body);
 
