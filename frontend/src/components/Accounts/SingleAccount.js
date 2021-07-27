@@ -1,13 +1,14 @@
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import HotswapInput from '../UsefulTools/HotswapInput';
 import { UpdateAccount } from '../../store/accounts';
 import { useHotswap } from '../../utils/hooks';
 
-import './index.css';
-
 export default function SingleAccount ({ account }) {
   const history = useHistory();
+
+  const currentAccount = useSelector(state => state.accounts.current);
 
   const [name, hotswapSetName, hotswapSubmitName] =
     useHotswap('name', account.name, UpdateAccount, account.id);
@@ -16,7 +17,11 @@ export default function SingleAccount ({ account }) {
 
   return (
     <div
-      className='single-account-container'
+      className={`single-account-container${
+        currentAccount && currentAccount.id === account.id
+          ? ' selected'
+          : ''
+      }`}
       onClick={goToAccount}
     >
       <HotswapInput
