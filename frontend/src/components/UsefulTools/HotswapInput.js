@@ -61,7 +61,7 @@ export default function HotswapInput ({ type = 'input', fallback = null, maxLeng
               onClick={() => setEdit(true)}
               className='hotswap-edit'
             >
-              Edit Name
+              Edit
             </button>
           </>
           )}
