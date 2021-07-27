@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider, useDispatch } from 'react-redux';
 
@@ -8,10 +8,10 @@ import Modal from './components/Modal';
 import configureStore from './store';
 import Errors from './components/Errors';
 import csrfetch from './store/csrfetch';
+import findCookie from './utils/findCookie';
 import { SetMooring } from './store/modal';
 
 import './index.css';
-import findCookie from './utils/findCookie';
 
 const store = configureStore();
 
@@ -40,7 +40,7 @@ function Root () {
   );
 }
 
-ReactDOM.render(
+render(
   <React.StrictMode>
     <Provider store={store}>
       <Root />
