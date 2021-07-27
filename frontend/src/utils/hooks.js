@@ -3,14 +3,14 @@ import { useDispatch } from 'react-redux';
 
 export const useHotswap = (key, initialValue, action, ...necessaryArgs) => {
   const dispatch = useDispatch();
+  const [shouldRebuild, setShouldRebuild] = useState(true);
   const [value, setValue] = useState(initialValue);
-  const mutable = useRef({
-    value,
-    setValue
-  });
+  shouldRebuild && value !== initialValue && setValue(initialValue);
+  const mutable = useRef({ value, setValue });
   const mutableSetter = value => {
     mutable.current.value = value;
     mutable.current.setValue(value);
+    setShouldRebuild(false);
   };
   const onSubmitConstructor = (key, { value }) => (on, after) => e => {
     e.preventDefault();
