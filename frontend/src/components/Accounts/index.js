@@ -5,6 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import SingleAccount from './SingleAccount';
 import SingleAccountPage from './SingleAccountPage';
 import { GetAccounts, UnloadAccounts } from '../../store/accounts';
+import Loading from '../UsefulTools/Loading';
+
+import './index.css';
 
 export default function Accounts () {
   const dispatch = useDispatch();
@@ -17,15 +20,17 @@ export default function Accounts () {
     return () => dispatch(UnloadAccounts());
   }, [dispatch]);
 
-  return loaded && (
+  return (
     <div className='page-container accounts'>
       <div className='account-list-sidebar'>
         <button className='new-account'>
           + New Account
         </button>
-        {accounts.map((account, idx) => (
-          <SingleAccount account={account} key={idx} />
-        ))}
+        {loaded
+          ? accounts.map((account, idx) => (
+            <SingleAccount account={account} key={idx} />
+          ))
+          : <Loading />}
       </div>
       <div className='account-container'>
         <Route path='/accounts/:accountId/'>
