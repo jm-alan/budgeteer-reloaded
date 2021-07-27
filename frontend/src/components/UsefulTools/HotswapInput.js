@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function HotswapInput ({ type = 'input', maxLength, contents, setContents, onSubmitConstructor }) {
+export default function HotswapInput ({ type = 'input', fallback = null, maxLength, contents, setContents, onSubmitConstructor }) {
   const [edit, setEdit] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -52,9 +52,11 @@ export default function HotswapInput ({ type = 'input', maxLength, contents, set
           )
         : (
           <>
-            <div className='hotswap-text'>
-              {contents}
-            </div>
+            {(fallback && fallback(contents)) || (
+              <div className='hotswap-text'>
+                {contents}
+              </div>
+            )}
             <button
               onClick={() => setEdit(true)}
               className='hotswap-edit'
