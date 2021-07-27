@@ -5,7 +5,7 @@ import HotswapInput from '../UsefulTools/HotswapInput';
 import { UpdateAccount } from '../../store/accounts';
 import { useHotswap } from '../../utils/hooks';
 
-export default function SingleAccount ({ account }) {
+export default function AccountEntry ({ account }) {
   const history = useHistory();
 
   const currentAccount = useSelector(state => state.accounts.current);
