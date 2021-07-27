@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Home from './components/Home';
 import Accounts from './components/Accounts';
@@ -27,8 +27,11 @@ export default function App () {
           <Route path='/accounts/'>
             <Accounts />
           </Route>
-          <Route exact path='/home'>
+          <Route path='/home/'>
             <Home />
+          </Route>
+          <Route>
+            <Redirect to='/home/' />
           </Route>
         </Switch>
       </div>
