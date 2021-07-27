@@ -9,12 +9,13 @@ export default function SingleAccountPage () {
 
   const { accountId } = useParams();
 
+  const accountsLoaded = useSelector(state => state.accounts.loaded);
   const account = useSelector(state => state.accounts.current);
 
   useEffect(() => {
-    dispatch(SelectAccount(accountId));
+    accountsLoaded && dispatch(SelectAccount(accountId));
     return () => dispatch(DeselectACcount());
-  }, [dispatch, accountId]);
+  }, [dispatch, accountsLoaded, accountId]);
 
   return account && (
     <div className='account-header'>
