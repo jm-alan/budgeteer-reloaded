@@ -3,13 +3,21 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import AccountEntry from './AccountEntry';
 import Loading from '../UsefulTools/Loading';
+import NewAccount from './NewAccount';
 import { GetAccounts, UnloadAccounts } from '../../store/accounts';
+import { ShowModal } from '../../store/UX';
+import { SetModal } from '../../store/modal';
 
 export default function AccountsList () {
   const dispatch = useDispatch();
 
   const accounts = useSelector(state => Object.values(state.accounts.all));
   const loaded = useSelector(state => state.accounts.loaded);
+
+  const popNewAccount = () => {
+    dispatch(SetModal(NewAccount));
+    dispatch(ShowModal());
+  };
 
   useEffect(() => {
     dispatch(GetAccounts());
@@ -18,7 +26,10 @@ export default function AccountsList () {
 
   return (
     <div className='account-list-sidebar'>
-      <button className='new-account'>
+      <button
+        onClick={popNewAccount}
+        className='new-account'
+      >
         + New Account
       </button>
       {loaded
