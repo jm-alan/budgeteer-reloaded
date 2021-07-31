@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { DeleteAccount } from '../../store/accounts';
+import { DeleteAccount } from '../../../store/accounts';
 
 export default function DestroyAccount () {
   const dispatch = useDispatch();

@@ -2,12 +2,13 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 
-import HotswapInput from '../UsefulTools/HotswapInput';
+import HotswapInput from '../../UsefulTools/HotswapInput';
 import DestroyAccount from './DestroyAccount';
-import { SetModal } from '../../store/modal';
-import { ShowModal } from '../../store/UX';
-import { UpdateAccount, SelectAccount, DeselectACcount } from '../../store/accounts';
-import { useHotswap } from '../../utils/hooks';
+import Calendar from './Calendar';
+import { SetModal } from '../../../store/modal';
+import { ShowModal } from '../../../store/UX';
+import { UpdateAccount, SelectAccount, DeselectACcount } from '../../../store/accounts';
+import { useHotswap } from '../../../utils/hooks';
 
 export default function SingleAccountPage () {
   const dispatch = useDispatch();
@@ -70,6 +71,7 @@ export default function SingleAccountPage () {
           Delete Account
         </button>
       </div>
+      <Calendar />
     </div>
   );
 }
