@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import HotswapInput from '../UsefulTools/HotswapInput';
 import { UpdateAccount } from '../../store/accounts';
 import { useHotswap } from '../../utils/hooks';
+import { useEffect } from 'react';
 
 export default function AccountEntry ({ account }) {
   const history = useHistory();
@@ -14,6 +15,10 @@ export default function AccountEntry ({ account }) {
     useHotswap('name', account.name, UpdateAccount, account.id);
 
   const goToAccount = () => history.push(`/accounts/${account.id}/`);
+
+  useEffect(() => {
+    hotswapSetName(account.name);
+  }, [hotswapSetName, account.name]);
 
   return (
     <div
