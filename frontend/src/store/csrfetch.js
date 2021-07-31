@@ -40,7 +40,7 @@ export default {
       if (res.status > 400) throw await res.json();
       return await res.json();
     } catch ({ errors }) {
-      this.dispatch(SetErrors(errors || this.genericErrors));
+      if (!res.ok) this.dispatch(SetErrors(errors || this.genericErrors));
       return {};
     }
   },
