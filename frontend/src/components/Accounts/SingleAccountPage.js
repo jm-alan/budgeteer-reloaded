@@ -24,6 +24,13 @@ export default function SingleAccountPage () {
     return () => dispatch(DeselectACcount());
   }, [dispatch, accountsLoaded, accountId]);
 
+  useEffect(() => {
+    if (account) {
+      hotswapSetName(account.name);
+      hotswapSetBalance(account.balance);
+    }
+  }, [account, hotswapSetName, hotswapSetBalance]);
+
   return account && (
     <div className='account-header'>
       <HotswapInput
