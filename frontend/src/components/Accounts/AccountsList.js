@@ -12,7 +12,7 @@ export default function AccountsList () {
   const dispatch = useDispatch();
 
   const accounts = useSelector(state => Object.values(state.accounts.all));
-  const loaded = useSelector(state => state.accounts.loaded);
+  const allLoaded = useSelector(state => state.accounts.allLoaded);
 
   const popNewAccount = () => {
     dispatch(SetModal(NewAccount));
@@ -32,7 +32,7 @@ export default function AccountsList () {
       >
         + New Account
       </button>
-      {loaded
+      {allLoaded
         ? accounts.map((account, idx) => (
           <AccountEntry account={account} key={idx} />
         ))
