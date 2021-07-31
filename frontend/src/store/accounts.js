@@ -1,3 +1,6 @@
+import { TearDown } from './modal';
+import { HideModal } from './UX';
+
 import csrfetch from './csrfetch';
 
 const LOAD_ALL = 'accounts/ALL';
@@ -42,9 +45,12 @@ export const GetAccounts = () => async dispatch => {
   dispatch(setAccounts(accounts));
 };
 
-export const CreateAccount = newAccount => async dispatch => {
+export const CreateAccount = (newAccount, history) => async dispatch => {
   const { account } = await csrfetch.post('/api/accounts/', newAccount);
   dispatch(createAccount(account));
+  dispatch(TearDown());
+  dispatch(HideModal());
+  history.push(`/accounts/${account.id}`);
 };
 
 export const UpdateAccount = (accountId, data, after) => async dispatch => {
@@ -91,7 +97,8 @@ export default function reducer (
         all: {
           ...state.all,
           [account.id]: account
-        }
+        },
+        current: account
       };
     case UPDATE:
       return {
