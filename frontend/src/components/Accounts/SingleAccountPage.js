@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 
 import HotswapInput from '../UsefulTools/HotswapInput';
 import { useHotswap } from '../../utils/hooks';
@@ -9,10 +9,13 @@ import { UpdateAccount, SelectAccount, DeselectACcount } from '../../store/accou
 export default function SingleAccountPage () {
   const dispatch = useDispatch();
 
+  const history = useHistory();
+
   const { accountId } = useParams();
 
-  const accountsLoaded = useSelector(state => state.accounts.loaded);
-  const account = useSelector(state => state.accounts.current);
+  const account = useSelector(state => state.accounts.current) || null;
+  const allLoaded = useSelector(state => state.accounts.allLoaded);
+  const currentLoaded = useSelector(state => state.accounts.currentLoaded);
 
   const [name, hotswapSetName, hotswapSubmitName] =
     useHotswap('name', account && account.name, UpdateAccount, account && account.id);
@@ -20,9 +23,13 @@ export default function SingleAccountPage () {
     useHotswap('balance', account && account.balance, UpdateAccount, account && account.id);
 
   useEffect(() => {
-    accountId && accountsLoaded && dispatch(SelectAccount(accountId));
+    accountId !== undefined && allLoaded && dispatch(SelectAccount(accountId));
     return () => dispatch(DeselectACcount());
-  }, [dispatch, accountsLoaded, accountId]);
+  }, [dispatch, allLoaded, accountId]);
+
+  useEffect(() => {
+    accountId !== undefined && allLoaded && currentLoaded && !account && history.push('/accounts/');
+  }, [accountId, allLoaded, currentLoaded, account, history]);
 
   useEffect(() => {
     if (account) {
