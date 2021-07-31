@@ -90,9 +90,7 @@ export default function reducer (
         ...state,
         all: {
           ...state.all,
-          [account.id]: {
-            ...account
-          }
+          [account.id]: account
         }
       };
     case UPDATE:
@@ -100,10 +98,9 @@ export default function reducer (
         ...state,
         all: {
           ...state.all,
-          [account.id]: {
-            ...account
-          }
-        }
+          [account.id]: account
+        },
+        current: account
       };
     case DELETE:
       delete state.all[accountId];
