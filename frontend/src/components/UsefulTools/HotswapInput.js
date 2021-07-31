@@ -45,6 +45,7 @@ export default function HotswapInput ({ type = 'input', fallback = null, maxLeng
             <button
               type='submit'
               disabled={loading}
+              onClick={e => e.stopPropagation()}
             >
               Done
             </button>
@@ -58,7 +59,7 @@ export default function HotswapInput ({ type = 'input', fallback = null, maxLeng
               </div>
             )}
             <button
-              onClick={() => setEdit(true)}
+              onClick={e => e.stopPropagation() ?? setEdit(true)}
               className='hotswap-edit'
             >
               Edit
