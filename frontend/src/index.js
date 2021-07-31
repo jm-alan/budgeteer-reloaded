@@ -11,6 +11,7 @@ import csrfetch from './store/csrfetch';
 import findCookie from './utils/findCookie';
 import { SetMooring } from './store/modal';
 
+import './utils/prototypes.js';
 import './index.css';
 
 const store = configureStore();
