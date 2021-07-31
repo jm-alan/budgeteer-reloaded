@@ -3,8 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 
 import HotswapInput from '../UsefulTools/HotswapInput';
-import { useHotswap } from '../../utils/hooks';
+import DestroyAccount from './DestroyAccount';
+import { SetModal } from '../../store/modal';
+import { ShowModal } from '../../store/UX';
 import { UpdateAccount, SelectAccount, DeselectACcount } from '../../store/accounts';
+import { useHotswap } from '../../utils/hooks';
 
 export default function SingleAccountPage () {
   const dispatch = useDispatch();
@@ -21,6 +24,11 @@ export default function SingleAccountPage () {
     useHotswap('name', account && account.name, UpdateAccount, account && account.id);
   const [balance, hotswapSetBalance, hotswapSubmitBalance] =
     useHotswap('balance', account && account.balance, UpdateAccount, account && account.id);
+
+  const popDelete = () => {
+    dispatch(SetModal(DestroyAccount));
+    dispatch(ShowModal());
+  };
 
   useEffect(() => {
     accountId !== undefined && allLoaded && dispatch(SelectAccount(accountId));
@@ -55,6 +63,12 @@ export default function SingleAccountPage () {
           setContents={hotswapSetBalance}
           onSubmitConstructor={hotswapSubmitBalance}
         />
+        <button
+          className='account-delete'
+          onClick={popDelete}
+        >
+          Delete Account
+        </button>
       </div>
     </div>
   );
