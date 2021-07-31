@@ -5,7 +5,8 @@
 .account-list-sidebar {
   border-right: 1px solid steelblue;
   left: 0;
-  width: 15vw;
+  min-width: 15vw;
+  max-width: 15vw;
   height: var(--under-navbar);
   overflow-y: auto;
   padding: 10px;
@@ -97,6 +98,7 @@
 }
 
 .account-container {
+  width: 100%;
   padding: 10px;
 }
 
@@ -123,4 +125,25 @@
 
 .account-header {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+}
+
+.account-header > .hotswap-container {
+  display: flex;
+}
+
+.account-header h1 {
+  margin: 5px 0px;
+}
+
+.calendar-container {
+  box-shadow: 0px 0px 10px darkgrey;
+  border-radius: 5px;
+  flex-grow: 1;
+  height: calc(var(--under-navbar) - 70px);
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(5, 1fr);
 }
