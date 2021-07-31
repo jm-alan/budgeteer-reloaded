@@ -69,19 +69,26 @@ export const UnloadAccounts = () => ({
 });
 
 export default function reducer (
-  state = { all: {}, current: null, loaded: false },
+  state = {
+    all: {},
+    current: null,
+    allLoaded: false,
+    currentLoaded: false
+  },
   { type, accountId, account, accounts }
 ) {
   switch (type) {
     case SELECT:
       return {
         ...state,
-        current: state.all[accountId]
+        current: state.all[accountId],
+        currentLoaded: true
       };
     case DESELECT:
       return {
         ...state,
-        current: null
+        current: null,
+        currentLoaded: false
       };
     case LOAD_ALL:
       return {
@@ -89,7 +96,7 @@ export default function reducer (
         all: {
           ...accounts
         },
-        loaded: true
+        allLoaded: true
       };
     case CREATE:
       return {
@@ -125,7 +132,7 @@ export default function reducer (
       return {
         ...state,
         all: {},
-        loaded: false
+        allLoaded: false
       };
     default:
       return state;
