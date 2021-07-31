@@ -27,6 +27,9 @@ export default function App () {
           <Route path='/accounts/'>
             <Accounts />
           </Route>
+          <Route path='/accounts/:accountId/'>
+            <Accounts />
+          </Route>
           <Route path='/home/'>
             <Home />
           </Route>

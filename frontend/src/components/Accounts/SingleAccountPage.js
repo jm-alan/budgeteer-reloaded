@@ -20,7 +20,7 @@ export default function SingleAccountPage () {
     useHotswap('balance', account && account.balance, UpdateAccount, account && account.id);
 
   useEffect(() => {
-    accountsLoaded && dispatch(SelectAccount(accountId));
+    accountId && accountsLoaded && dispatch(SelectAccount(accountId));
     return () => dispatch(DeselectACcount());
   }, [dispatch, accountsLoaded, accountId]);
 
@@ -32,21 +32,23 @@ export default function SingleAccountPage () {
   }, [account, hotswapSetName, hotswapSetBalance]);
 
   return account && (
-    <div className='account-header'>
-      <HotswapInput
-        contents={name}
-        fallback={n => <h1>{n}</h1>}
-        maxLength={100}
-        setContents={hotswapSetName}
-        onSubmitConstructor={hotswapSubmitName}
-      />
-      <HotswapInput
-        contents={balance}
-        fallback={bal => <h1>{bal}</h1>}
-        maxLength={100}
-        setContents={hotswapSetBalance}
-        onSubmitConstructor={hotswapSubmitBalance}
-      />
+    <div className='account-container'>
+      <div className='account-header'>
+        <HotswapInput
+          contents={name}
+          fallback={n => <h1>{n}</h1>}
+          maxLength={100}
+          setContents={hotswapSetName}
+          onSubmitConstructor={hotswapSubmitName}
+        />
+        <HotswapInput
+          contents={balance}
+          fallback={bal => <h1>{bal}</h1>}
+          maxLength={100}
+          setContents={hotswapSetBalance}
+          onSubmitConstructor={hotswapSubmitBalance}
+        />
+      </div>
     </div>
   );
 }
