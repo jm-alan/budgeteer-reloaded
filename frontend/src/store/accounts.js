@@ -100,7 +100,7 @@ export default function reducer (
           ...state.all,
           [account.id]: account
         },
-        current: account
+        current: state.current && account
       };
     case DELETE:
       delete state.all[accountId];
