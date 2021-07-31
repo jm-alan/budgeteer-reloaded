@@ -12,6 +12,8 @@ const UPDATE = 'accounts/UPDATE';
 const DELETE = 'accounts/DELETE';
 const SELECT = 'accounts/SELECT';
 const DESELECT = 'accounts/DESELECT';
+const VIEW_CALENDAR = 'accounts/VIEW_CALENDAR';
+const VIEW_ITEMS = 'accounts/VIEW_ITEMS';
 
 const setAccounts = accounts => ({
   type: LOAD_ALL,
@@ -93,7 +95,8 @@ export default function reducer (
     currentItems: {},
     current: null,
     allLoaded: false,
-    currentLoaded: false
+    currentLoaded: false,
+    viewMode: null
   },
   { type, accountId, account, accounts, items }
 ) {
@@ -108,7 +111,18 @@ export default function reducer (
       return {
         ...state,
         current: null,
-        currentLoaded: false
+        currentLoaded: false,
+        viewMode: null
+      };
+    case VIEW_CALENDAR:
+      return {
+        ...state,
+        viewMode: 'calendar'
+      };
+    case VIEW_ITEMS:
+      return {
+        ...state,
+        viewMode: 'items'
       };
     case LOAD_ALL:
       return {
