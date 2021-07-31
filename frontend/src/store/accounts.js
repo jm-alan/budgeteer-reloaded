@@ -62,6 +62,8 @@ export const UpdateAccount = (accountId, data, after) => async dispatch => {
 export const DeleteAccount = (accountId) => async dispatch => {
   await csrfetch.delete(`/api/accounts/${accountId}/`);
   dispatch(deleteAccount(accountId));
+  dispatch(TearDown());
+  dispatch(HideModal());
 };
 
 export const UnloadAccounts = () => ({
@@ -126,7 +128,8 @@ export default function reducer (
         ...state,
         all: {
           ...state.all
-        }
+        },
+        current: null
       };
     case UNLOAD:
       return {
