@@ -100,7 +100,11 @@ export default function reducer (
           ...state.all,
           [account.id]: account
         },
-        current: state.current && account
+        current: state.current && (
+          state.current.id === account.id
+            ? account
+            : state.current
+        )
       };
     case DELETE:
       delete state.all[accountId];
