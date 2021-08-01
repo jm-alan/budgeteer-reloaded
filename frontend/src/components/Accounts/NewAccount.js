@@ -63,7 +63,6 @@ export default function NewAccount () {
           Account Description
         </label>
         <textarea
-          required
           value={description}
           onChange={({ target: { value } }) => setDescription(value)}
           className='new-account-input description'
