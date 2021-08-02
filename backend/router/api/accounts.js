@@ -16,7 +16,7 @@ router.get('/:accountId(\\d+)/items/:date(\\d+)/:month(\\d+)/:year(\\d+)/', rest
   const { user, params: { accountId, date, month, year } } = req;
 
   res.json({
-    items: (await user.getItems({
+    items: await user.getItems({
       where: {
         [Op.or]: [
           {
@@ -30,7 +30,7 @@ router.get('/:accountId(\\d+)/items/:date(\\d+)/:month(\\d+)/:year(\\d+)/', rest
         ],
         accountId
       }
-    })).toMappedObject('id')
+    })
   });
 }));
 
