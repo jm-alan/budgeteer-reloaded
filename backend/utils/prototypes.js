@@ -19,6 +19,6 @@ String.prototype.truncateUntil = function (pattern = /^$/) {
   return out;
 };
 
-Array.prototype.toMappedObject = function (key) {
-  return this.reduce((acc, next) => (acc[next[key]] = next) && acc, {});
+Array.prototype.toMappedObject = function (key, formatter = f => f) {
+  return this.reduce((acc, next) => (acc[next[formatter(key)]] = next) && acc, {});
 };
