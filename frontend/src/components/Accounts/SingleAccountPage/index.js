@@ -71,7 +71,7 @@ export default function SingleAccountPage () {
           Delete Account
         </button>
       </div>
-      <Calendar />
+      <Calendar accountId={account.id} />
     </div>
   );
 }
