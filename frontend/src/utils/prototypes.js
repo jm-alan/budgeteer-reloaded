@@ -1,6 +1,6 @@
 /* eslint-disable no-extend-native */
-Date.prototype.toShortUTCString = function () {
-  return [this.getUTCMonth(), this.getUTCDate(), this.getUTCFullYear()]
+Date.prototype.toShortString = function () {
+  return [this.getMonth(), this.getDate(), this.getFullYear()]
     .map((n, i) =>
       (!i &&
         (n >= 9 ? n + 1 : `0${n + 1}`)
@@ -9,13 +9,13 @@ Date.prototype.toShortUTCString = function () {
 };
 
 Date.prototype.toEnumeratedMonthObject = function () {
-  const date = new Date(Date.UTC(this.getUTCFullYear(), this.getUTCMonth(), 1));
+  const date = new Date(this.getTime());
   const enumerated = {};
-  enumerated[date.toShortUTCString()] = date.getUTCDay();
-  date.setUTCDate(2);
-  while (date.getUTCDate() !== 1) {
-    enumerated[date.toShortUTCString()] = date.getUTCDay();
-    date.setUTCDate(date.getUTCDate() + 1);
+  enumerated[date.toShortString()] = date.getDay();
+  date.setDate(2);
+  while (date.getDate() !== 1) {
+    enumerated[date.toShortString()] = date.getDay();
+    date.setDate(date.getDate() + 1);
   }
   return enumerated;
 };
