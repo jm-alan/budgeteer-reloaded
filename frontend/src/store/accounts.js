@@ -4,9 +4,11 @@ import { HideModal } from './UX';
 import csrfetch from './csrfetch';
 
 const LOAD_ALL = 'accounts/ALL';
+const LOAD_CALENDAR = 'accounts/CALENDAR';
 const LOAD_ITEMS = 'accounts/ITEMS';
 const UNLOAD = 'accounts/UNLOAD';
 const UNLOAD_ITEMS = 'accounts/UNLOAD_ITEMS';
+const UNLOAD_CALENDAR = 'accounts/UNLOAD_CALENDAR';
 const CREATE = 'accounts/CREATE';
 const UPDATE = 'accounts/UPDATE';
 const DELETE = 'accounts/DELETE';
@@ -35,9 +37,20 @@ const deleteAccount = accountId => ({
   accountId
 });
 
+const loadCalendarItems = (date, items) => ({
+  type: LOAD_CALENDAR,
+  date,
+  items
+});
+
 const loadItems = items => ({
   type: LOAD_ITEMS,
   items
+});
+
+export const UnloadItemsByDate = date => ({
+  type: UNLOAD_CALENDAR,
+  date
 });
 
 export const SelectAccount = accountId => ({
@@ -56,7 +69,7 @@ export const GetAccounts = () => async dispatch => {
 
 export const GetItemsByDate = (date, accountId) => async dispatch => {
   const { items } = await csrfetch.get(`/api/accounts/${accountId}/items/${date}/`);
-  dispatch(loadItems(items));
+  dispatch(loadCalendarItems(date, items));
 };
 
 export const GetAllAccountItems = accountId => async dispatch => {
@@ -98,7 +111,7 @@ export default function reducer (
     currentLoaded: false,
     viewMode: null
   },
-  { type, accountId, account, accounts, items }
+  { type, accountId, account, accounts, items, date }
 ) {
   switch (type) {
     case SELECT:
@@ -168,6 +181,17 @@ export default function reducer (
         ...state,
         currentItems: items
       };
+    case LOAD_CALENDAR:
+      return {
+        ...state,
+        currentItems: {
+          ...state.currentItems,
+          [date]: items
+        }
+      };
+    case UNLOAD_CALENDAR:
+      delete state.currentItems[date];
+      return state;
     case UNLOAD_ITEMS:
       return {
         ...state,
