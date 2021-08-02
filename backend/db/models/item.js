@@ -20,15 +20,10 @@ module.exports = (sequelize, { DataTypes, fn }) => {
       defaultValue: false
     },
     amount: DataTypes.STRING,
-    effectiveDate: {
-      type: DataTypes.DATE,
-      defaultValue: fn('now')
-    },
-    startDate: {
-      type: DataTypes.DATE,
-      defaultValue: fn('now')
-    },
-    endDate: DataTypes.DATE,
+    effectiveDate: DataTypes.INTEGER,
+    effectiveFullDate: DataTypes.STRING,
+    startDate: DataTypes.STRING,
+    endDate: DataTypes.STRING,
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
