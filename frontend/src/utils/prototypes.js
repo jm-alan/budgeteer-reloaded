@@ -11,6 +11,7 @@ Date.prototype.toShortString = function () {
 Date.prototype.toEnumeratedMonthObject = function () {
   const date = new Date(this.getTime());
   const enumerated = {};
+  date.setDate(1);
   enumerated[date.toShortString()] = date.getDay();
   date.setDate(2);
   while (date.getDate() !== 1) {
