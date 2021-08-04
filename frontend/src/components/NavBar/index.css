@@ -1,12 +1,56 @@
-nav {
-  height: 50px;
+.nav-position-container {
+  min-width: 15vw;
+  max-width: 15vw;
+  min-height: 50px;
+  max-height: 50px;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  border-bottom: 1px solid steelblue;
+  justify-content: center;
 }
 
-nav > * {
+.nav-menu {
+  position: relative;
+  transition:
+    width 0.3s,
+    height 0.3s;
+  cursor: pointer;
+  width: 45px;
+  height: 45px;
+  color: white;
+  font-size: 25px;
+  font-weight: bolder;
+  overflow: hidden;
+  background-color: steelblue;
+  display: flex;
+  justify-content: flex-start;
+  border-radius: 22.5px;
+}
+
+.nav-menu.expand {
+  width: 12vw;
+  height: 100px;
+}
+
+.nav {
+  transition:
+    top 0.3s,
+    bottom 0.3s;
+  position: absolute;
+  top: 8px;
+  left: 6px;
+  bottom: unset;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-around;
+}
+
+.nav-menu.expand .nav {
+  top: unset;
+  bottom: 0px;
+}
+
+.nav > * {
   cursor: pointer;
   transition:
     top 0.25s,
@@ -31,7 +75,7 @@ nav > * {
   box-shadow: 2px 2px 2px darkgrey;
 }
 
-nav > *.active {
+.nav > *.active {
   top: 2px;
   left: 2px;
   box-shadow: none;

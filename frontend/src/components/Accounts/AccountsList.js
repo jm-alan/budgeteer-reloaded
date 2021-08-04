@@ -11,7 +11,8 @@ import { SetModal } from '../../store/modal';
 export default function AccountsList () {
   const dispatch = useDispatch();
 
-  const accounts = useSelector(state => Object.values(state.accounts.all));
+  const user = useSelector(state => state.session.user);
+  const accounts = useSelector(state => state.accounts.all);
   const allLoaded = useSelector(state => state.accounts.allLoaded);
 
   const popNewAccount = () => {
@@ -20,11 +21,11 @@ export default function AccountsList () {
   };
 
   useEffect(() => {
-    dispatch(GetAccounts());
+    user && dispatch(GetAccounts());
     return () => dispatch(UnloadAccounts());
-  }, [dispatch]);
+  }, [dispatch, user]);
 
-  return (
+  return user && (
     <div className='account-list-sidebar'>
       <button
         onClick={popNewAccount}
@@ -33,7 +34,7 @@ export default function AccountsList () {
         + New Account
       </button>
       {allLoaded
-        ? accounts.map((account, idx) => (
+        ? Object.values(accounts).map((account, idx) => (
           <AccountEntry account={account} key={idx} />
         ))
         : <Loading />}

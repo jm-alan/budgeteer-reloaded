@@ -1,24 +1,12 @@
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import HotswapInput from '../UsefulTools/HotswapInput';
-import { UpdateAccount } from '../../store/accounts';
-import { useHotswap } from '../../utils/hooks';
-import { useEffect } from 'react';
-
 export default function AccountEntry ({ account }) {
   const history = useHistory();
 
   const currentAccount = useSelector(state => state.accounts.current);
 
-  const [name, hotswapSetName, hotswapSubmitName] =
-    useHotswap('name', account.name, UpdateAccount, account.id);
-
   const goToAccount = () => history.push(`/accounts/${account.id}/`);
-
-  useEffect(() => {
-    hotswapSetName(account.name);
-  }, [hotswapSetName, account.name]);
 
   return (
     <div
@@ -29,13 +17,9 @@ export default function AccountEntry ({ account }) {
       }`}
       onClick={goToAccount}
     >
-      <HotswapInput
-        type='textarea'
-        contents={name}
-        maxLength={100}
-        setContents={hotswapSetName}
-        onSubmitConstructor={hotswapSubmitName}
-      />
+      <span className='account-entry-name'>
+        {account.name}
+      </span>
     </div>
   );
 }

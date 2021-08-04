@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { GetItemsByDate, UnloadItemsByDate } from '../../../../store/accounts';
+import { GetItemsByDate, UnloadItemsByDate } from '../../../store/accounts';
 
 export default function Day ({ weekday, date, calendarRef, balance }) {
   const dispatch = useDispatch();

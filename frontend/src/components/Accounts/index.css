@@ -3,11 +3,10 @@
 }
 
 .account-list-sidebar {
-  border-right: 1px solid steelblue;
   left: 0;
   min-width: 15vw;
   max-width: 15vw;
-  height: var(--under-navbar);
+  height: calc(100vh - 50px);
   overflow-y: auto;
   padding: 10px;
 }
@@ -98,7 +97,9 @@
 }
 
 .account-container {
-  width: 100%;
+  left: 15vw;
+  height: 100vh;
+  width: 85vw;
   padding: 10px;
 }
 
@@ -141,7 +142,7 @@
 .calendar-container {
   border-radius: 5px;
   flex-grow: 1;
-  height: calc(var(--under-navbar) - 70px);
+  height: calc(100vh - 70px);
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: repeat(5, 1fr);

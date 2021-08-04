@@ -4,7 +4,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Home from './components/Home';
 import Accounts from './components/Accounts';
-import NavBar from './components/NavBar';
+import Sidebar from './components/Sidebar';
 import { Load } from './store/session';
 
 export default function App () {
@@ -17,24 +17,22 @@ export default function App () {
   }, [dispatch]);
 
   return loaded && (
-    <>
-      <NavBar />
-      <div id='main-site-container'>
-        <Switch>
-          <Route exact path='/accounts/'>
-            <Accounts />
-          </Route>
-          <Route path='/accounts/:accountId/'>
-            <Accounts />
-          </Route>
-          <Route path='/home/'>
-            <Home />
-          </Route>
-          <Route>
-            <Redirect to='/home/' />
-          </Route>
-        </Switch>
-      </div>
-    </>
+    <div id='main-site-container'>
+      <Sidebar />
+      <Switch>
+        <Route exact path='/accounts/'>
+          <Accounts />
+        </Route>
+        <Route path='/accounts/:accountId/'>
+          <Accounts />
+        </Route>
+        <Route path='/home/'>
+          <Home />
+        </Route>
+        <Route>
+          <Redirect to='/home/' />
+        </Route>
+      </Switch>
+    </div>
   );
 }
