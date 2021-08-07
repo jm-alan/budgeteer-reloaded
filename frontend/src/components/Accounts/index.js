@@ -74,7 +74,7 @@ export default function Accounts () {
             Delete Account
           </button>
         </div>
-        <Calendar accountId={account.id} />
+        <Calendar />
       </div>
 
     </div>
