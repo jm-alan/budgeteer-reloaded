@@ -8,7 +8,6 @@ const LOAD_CALENDAR = 'accounts/CALENDAR';
 const LOAD_ITEMS = 'accounts/ITEMS';
 const UNLOAD = 'accounts/UNLOAD';
 const UNLOAD_ITEMS = 'accounts/UNLOAD_ITEMS';
-const UNLOAD_CALENDAR = 'accounts/UNLOAD_CALENDAR';
 const CREATE = 'accounts/CREATE';
 const UPDATE = 'accounts/UPDATE';
 const DELETE = 'accounts/DELETE';
@@ -48,9 +47,8 @@ const loadItems = items => ({
   items
 });
 
-export const UnloadItemsByDate = date => ({
-  type: UNLOAD_CALENDAR,
-  date
+export const UnloadItems = () => ({
+  type: UNLOAD_ITEMS
 });
 
 export const SelectAccount = accountId => ({
@@ -189,9 +187,6 @@ export default function reducer (
           [date]: items
         }
       };
-    case UNLOAD_CALENDAR:
-      delete state.currentItems[date];
-      return state;
     case UNLOAD_ITEMS:
       return {
         ...state,
