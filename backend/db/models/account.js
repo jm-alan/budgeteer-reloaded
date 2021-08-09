@@ -6,6 +6,37 @@ module.exports = (sequelize, { DataTypes, fn }) => {
       return await this.createItem({ ...itemBody, userId: this.userId });
     }
 
+    async getItemsByExactDate (effectiveMonth, effectiveDate, effectiveYear) {
+      return await this.getItems({
+        where: {
+          effectiveMonth,
+          effectiveDate,
+          effectiveYear
+        }
+      });
+    }
+
+    async getRecurringItemsByDate (effectiveDate) {
+      return await this.getItems({
+        where: {
+          effectiveDate,
+          recurring: true
+        }
+      });
+    }
+
+    async getItemsByMonth (effectiveMonth) {
+      return await this.getItems({ where: { effectiveMonth } });
+    }
+
+    async getRecurringItems () {
+      return await this.getItems({ where: { recurring: true } });
+    }
+
+    async getSingleItems () {
+      return await this.getItems({ where: { recurring: false } });
+    }
+
     static associate ({ User, Item }) {
       Account.belongsTo(User, { foreignKey: 'userId' });
       Account.hasMany(Item, { foreignKey: 'accountId' });
