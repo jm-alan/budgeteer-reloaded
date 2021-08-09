@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { GetItemsByDate, UnloadItems } from '../../../store/accounts';
+import { GetItemsByDate } from '../../../store/accounts';
 
 export default function Day ({ weekday, date, calendarRef, balance }) {
   const dispatch = useDispatch();
@@ -10,7 +10,6 @@ export default function Day ({ weekday, date, calendarRef, balance }) {
   const currentAccount = useSelector(state => state.accounts.current);
   const currentId = currentAccount && currentAccount.id;
 
-  const [resolvedParentRect, setResolvedParentRect] = useState(false);
   const [top, setInnerTop] = useState(null);
   const [bottom, setInnerBottom] = useState(null);
   const [left, setInnerLeft] = useState(null);
@@ -18,10 +17,14 @@ export default function Day ({ weekday, date, calendarRef, balance }) {
   const [width, setInnerWidth] = useState(null);
   const [height, setInnerHeight] = useState(null);
   const [detailMode, setDetailMode] = useState(false);
+  const [resolvedParentRect, setResolvedParentRect] = useState(false);
+  const [displayDate, setDisplayDate] = useState('');
+
+  const previousDate = displayDate > 10 ? displayDate - 1 : `0${displayDate - 1}`;
+
+  const prev = useSelector(state => state.accounts.currentItems[`${date.slice(0, 2)}/${previousDate}/${date.slice(6)}`]);
 
   const freezeRef = useRef(null);
-
-  const displayDate = date.slice(3, 5);
 
   const onClickDay = e => {
     e.stopPropagation();
@@ -65,9 +68,12 @@ export default function Day ({ weekday, date, calendarRef, balance }) {
   }, [detailMode, resolvedParentRect, calendarRef]);
 
   useEffect(() => {
-    dispatch(GetItemsByDate(date, currentId));
-    return () => dispatch(UnloadItems(date));
-  }, [dispatch, date, currentId]);
+    if (displayDate === '01' || !!prev) dispatch(GetItemsByDate(date, currentId));
+  }, [dispatch, date, currentId, displayDate, prev]);
+
+  useEffect(() => {
+    setDisplayDate(date.slice(3, 5));
+  }, [date]);
 
   return (
     <div
@@ -77,7 +83,7 @@ export default function Day ({ weekday, date, calendarRef, balance }) {
         gridColumnStart: weekday + 1
       }}
     >
-      {resolvedParentRect && (
+      {displayDate && resolvedParentRect && (
         (items && (
           <div
             className={`calendar-day${
