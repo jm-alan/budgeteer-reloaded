@@ -15,6 +15,7 @@ const SELECT = 'accounts/SELECT';
 const DESELECT = 'accounts/DESELECT';
 const VIEW_CALENDAR = 'accounts/VIEW_CALENDAR';
 const VIEW_ITEMS = 'accounts/VIEW_ITEMS';
+const RESOLVE_BALANCE = 'accounts/RESOLVE_BALANCE';
 
 const setAccounts = accounts => ({
   type: LOAD_ALL,
@@ -45,6 +46,12 @@ const loadCalendarItems = (date, items) => ({
 const loadItems = items => ({
   type: LOAD_ITEMS,
   items
+});
+
+export const ResolveBalance = (date, balance) => ({
+  type: RESOLVE_BALANCE,
+  date,
+  balance
 });
 
 export const UnloadItems = () => ({
@@ -103,13 +110,13 @@ export const UnloadAccounts = () => ({
 export default function reducer (
   state = {
     all: {},
-    currentItems: {},
+    calendar: {},
     current: null,
     allLoaded: false,
     currentLoaded: false,
     viewMode: null
   },
-  { type, accountId, account, accounts, items, date }
+  { type, accountId, account, accounts, items, date, balance }
 ) {
   switch (type) {
     case SELECT:
@@ -124,6 +131,17 @@ export default function reducer (
         current: null,
         currentLoaded: false,
         viewMode: null
+      };
+    case RESOLVE_BALANCE:
+      return {
+        ...state,
+        calendar: {
+          ...state.calendar,
+          [date]: {
+            ...state.calendar[date],
+            balance
+          }
+        }
       };
     case VIEW_CALENDAR:
       return {
@@ -177,20 +195,23 @@ export default function reducer (
     case LOAD_ITEMS:
       return {
         ...state,
-        currentItems: items
+        calendar: items
       };
     case LOAD_CALENDAR:
       return {
         ...state,
-        currentItems: {
-          ...state.currentItems,
-          [date]: items
+        calendar: {
+          ...state.calendar,
+          [date]: {
+            items,
+            balance: null
+          }
         }
       };
     case UNLOAD_ITEMS:
       return {
         ...state,
-        currentItems: {}
+        calendar: {}
       };
     case UNLOAD:
       return {
