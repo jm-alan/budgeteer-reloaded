@@ -8,6 +8,7 @@ export default function Day ({ weekday, date, calendarRef, balance }) {
 
   const items = useSelector(state => state.accounts.currentItems[date]) ?? null;
   const currentAccount = useSelector(state => state.accounts.current);
+  const currentId = currentAccount && currentAccount.id;
 
   const [resolvedParentRect, setResolvedParentRect] = useState(false);
   const [top, setInnerTop] = useState(null);
@@ -19,14 +20,6 @@ export default function Day ({ weekday, date, calendarRef, balance }) {
   const [detailMode, setDetailMode] = useState(false);
 
   const freezeRef = useRef(null);
-
-  // const itemList = items && Object.values(items);
-
-  // if (itemList) {
-  //   for (let i = 0; i < itemList.length; i++) {
-  //     balance += +itemList[i].amount;
-  //   }
-  // }
 
   const displayDate = date.slice(3, 5);
 
@@ -57,6 +50,7 @@ export default function Day ({ weekday, date, calendarRef, balance }) {
         setInnerRight(parentRect.right);
         setInnerWidth(parentRect.width);
         setInnerHeight(parentRect.height);
+        if (!resolvedParentRect) setResolvedParentRect(true);
       }
     };
     if (detailMode) {
@@ -68,33 +62,12 @@ export default function Day ({ weekday, date, calendarRef, balance }) {
       window.removeEventListener('resize', scaleUp);
       document.removeEventListener('click', tearDown);
     };
-  }, [detailMode]);
+  }, [detailMode, resolvedParentRect, calendarRef]);
 
   useEffect(() => {
-    dispatch(GetItemsByDate(date, currentAccount.id));
+    dispatch(GetItemsByDate(date, currentId));
     return () => dispatch(UnloadItems(date));
-  }, [dispatch, date]);
-
-  useEffect(() => {
-  }, [detailMode, setDetailMode]);
-
-  useEffect(() => {
-    const freezeRect = () => {
-      if (!detailMode) {
-        const parentRect = freezeRef.current.getBoundingClientRect();
-        setInnerTop(parentRect.top);
-        setInnerBottom(parentRect.bottom);
-        setInnerLeft(parentRect.left);
-        setInnerRight(parentRect.right);
-        setInnerWidth(parentRect.width);
-        setInnerHeight(parentRect.height);
-        setResolvedParentRect(true);
-      }
-    };
-    freezeRect();
-    window.addEventListener('resize', freezeRect);
-    return () => window.removeEventListener('resize', freezeRect);
-  }, [detailMode]);
+  }, [dispatch, date, currentId]);
 
   return (
     <div
