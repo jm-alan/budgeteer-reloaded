@@ -54,6 +54,7 @@ module.exports = (sequelize, { DataTypes, fn }) => {
         model: 'Users'
       }
     },
+    historicBalance: DataTypes.TEXT,
     createdAt: {
       type: DataTypes.DATE,
       defaultValue: fn('now')
