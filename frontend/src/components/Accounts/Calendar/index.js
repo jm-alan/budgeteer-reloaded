@@ -3,8 +3,10 @@ import { useState, useEffect, useRef } from 'react';
 import Day from './Day';
 
 export default function Calendar () {
-  const [, reload] = useState();
+  const [, _] = useState();
   const [resolvedRect, setResolvedRect] = useState(false);
+
+  const reload = () => _($ => !$);
 
   const dateRef = useRef(new Date());
   const calendarRef = useRef(null);
@@ -12,13 +14,13 @@ export default function Calendar () {
   const forward = () => {
     const now = dateRef.current.getMonth();
     dateRef.current.setMonth(now === 11 ? 0 : now + 1);
-    reload(_ => !_);
+    reload();
   };
 
   const backward = () => {
     const now = dateRef.current.getMonth();
     dateRef.current.setMonth(now === 0 ? 11 : now - 1);
-    reload(_ => !_);
+    reload();
   };
 
   const datesKV = Object.entries(dateRef.current.toEnumeratedMonthObject());
