@@ -3,10 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { GetItemsByDate } from '../../../store/accounts';
 
-export default function Day ({ weekday, date, calendarRef, balance }) {
+const previousDateSelectGenerator = (date, previousDate) => state => {
+  const prev = state.accounts.calendar[`${date.slice(0, 2)}/${previousDate}/${date.slice(6)}`] || null;
+  return prev && prev.balance;
+};
+
+export default function Day ({ weekday, date, calendarRef }) {
   const dispatch = useDispatch();
 
-  const items = useSelector(state => state.accounts.currentItems[date]) ?? null;
+  const items = useSelector(state => state.accounts.calendar[date]) ?? null;
   const currentAccount = useSelector(state => state.accounts.current);
   const currentId = currentAccount && currentAccount.id;
 
@@ -22,7 +27,9 @@ export default function Day ({ weekday, date, calendarRef, balance }) {
 
   const previousDate = displayDate > 10 ? displayDate - 1 : `0${displayDate - 1}`;
 
-  const prev = useSelector(state => state.accounts.currentItems[`${date.slice(0, 2)}/${previousDate}/${date.slice(6)}`]);
+  const previousDateSelector = previousDateSelectGenerator(date, previousDate);
+
+  const prevBalance = useSelector(previousDateSelector);
 
   const freezeRef = useRef(null);
 
@@ -33,43 +40,37 @@ export default function Day ({ weekday, date, calendarRef, balance }) {
 
   useEffect(() => {
     const tearDown = () => setDetailMode(false);
-    const scaleUp = () => {
+    const scale = () => {
+      let parentRect;
       if (detailMode) {
-        const calendarRect = calendarRef.getBoundingClientRect();
-        setInnerTop(calendarRect.top - 5);
-        setInnerBottom(calendarRect.bottom + 10);
-        setInnerLeft(calendarRect.left);
-        setInnerRight(calendarRect.right);
-        setInnerWidth(calendarRect.width);
-        setInnerHeight(calendarRect.height);
-      }
-    };
-    const scaleDown = () => {
-      if (!detailMode) {
-        const parentRect = freezeRef.current.getBoundingClientRect();
+        parentRect = calendarRef.getBoundingClientRect();
+        setInnerTop(parentRect.top - 5);
+        setInnerBottom(parentRect.bottom + 10);
+      } else {
+        parentRect = freezeRef.current.getBoundingClientRect();
         setInnerTop(parentRect.top);
         setInnerBottom(parentRect.bottom);
-        setInnerLeft(parentRect.left);
-        setInnerRight(parentRect.right);
-        setInnerWidth(parentRect.width);
-        setInnerHeight(parentRect.height);
-        if (!resolvedParentRect) setResolvedParentRect(true);
       }
+      setInnerLeft(parentRect.left);
+      setInnerRight(parentRect.right);
+      setInnerWidth(parentRect.width);
+      setInnerHeight(parentRect.height);
+      if (!resolvedParentRect) setResolvedParentRect(true);
     };
     if (detailMode) {
-      scaleUp();
-      window.addEventListener('resize', scaleUp);
+      window.addEventListener('resize', scale);
       document.addEventListener('click', tearDown);
-    } else scaleDown();
+    }
+    scale();
     return () => {
-      window.removeEventListener('resize', scaleUp);
+      window.removeEventListener('resize', scale);
       document.removeEventListener('click', tearDown);
     };
   }, [detailMode, resolvedParentRect, calendarRef]);
 
   useEffect(() => {
-    if (displayDate === '01' || !!prev) dispatch(GetItemsByDate(date, currentId));
-  }, [dispatch, date, currentId, displayDate, prev]);
+    if (displayDate === '01' || !!prevBalance) dispatch(GetItemsByDate(date, currentId));
+  }, [dispatch, date, currentId, displayDate, prevBalance]);
 
   useEffect(() => {
     setDisplayDate(date.slice(3, 5));
