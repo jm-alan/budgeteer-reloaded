@@ -18,6 +18,29 @@ module.exports = (sequelize, { DataTypes, fn }) => {
       return { id, username, email };
     }
 
+    async getItemsByExactDate (effectiveMonth, effectiveDate, effectiveYear) {
+      return await this.getItems({
+        where: {
+          effectiveMonth,
+          effectiveDate,
+          effectiveYear
+        }
+      });
+    }
+
+    async getRecurringItemsByDate (effectiveDate) {
+      return await this.getItems({
+        where: {
+          effectiveDate,
+          recurring: true
+        }
+      });
+    }
+
+    async getItemsByMonth (effectiveMonth) {
+      return await this.getItems({ where: { effectiveMonth } });
+    }
+
     async getRecurringItems () {
       return await this.getItems({ where: { recurring: true } });
     }
