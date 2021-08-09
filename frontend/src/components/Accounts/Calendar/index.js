@@ -1,8 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { UnloadItems } from '../../../store/accounts';
 
 import Day from './Day';
 
 export default function Calendar () {
+  const dispatch = useDispatch();
+
   const [, _] = useState();
   const [resolvedRect, setResolvedRect] = useState(false);
 
@@ -14,12 +19,14 @@ export default function Calendar () {
   const forward = () => {
     const now = dateRef.current.getMonth();
     dateRef.current.setMonth(now === 11 ? 0 : now + 1);
+    dispatch(UnloadItems());
     reload();
   };
 
   const backward = () => {
     const now = dateRef.current.getMonth();
     dateRef.current.setMonth(now === 0 ? 11 : now - 1);
+    dispatch(UnloadItems());
     reload();
   };
 
@@ -27,7 +34,8 @@ export default function Calendar () {
 
   useEffect(() => {
     setResolvedRect(true);
-  }, []);
+    return () => dispatch(UnloadItems());
+  }, [dispatch]);
 
   return (
     <>
