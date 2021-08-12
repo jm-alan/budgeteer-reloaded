@@ -9,8 +9,13 @@ const previousDateSelectGenerator = (date, previousDate) => state => {
 };
 
 export default function Day ({ weekday, date, calendarRef }) {
+  const displayDate = date.slice(3, 5);
   const dispatch = useDispatch();
 
+  const previousDate = displayDate > 10 ? displayDate - 1 : `0${displayDate - 1}`;
+  const previousDateSelector = previousDateSelectGenerator(date, previousDate);
+
+  const prevBalance = useSelector(previousDateSelector);
   const items = useSelector(state => state.accounts.calendar[date]) ?? null;
   const currentAccount = useSelector(state => state.accounts.current);
   const currentId = currentAccount && currentAccount.id;
@@ -23,13 +28,6 @@ export default function Day ({ weekday, date, calendarRef }) {
   const [height, setInnerHeight] = useState(null);
   const [detailMode, setDetailMode] = useState(false);
   const [resolvedParentRect, setResolvedParentRect] = useState(false);
-  const [displayDate, setDisplayDate] = useState('');
-
-  const previousDate = displayDate > 10 ? displayDate - 1 : `0${displayDate - 1}`;
-
-  const previousDateSelector = previousDateSelectGenerator(date, previousDate);
-
-  const prevBalance = useSelector(previousDateSelector);
 
   const freezeRef = useRef(null);
 
@@ -71,10 +69,6 @@ export default function Day ({ weekday, date, calendarRef }) {
   useEffect(() => {
     if (displayDate === '01' || !!prevBalance) dispatch(GetItemsByDate(date, currentId));
   }, [dispatch, date, currentId, displayDate, prevBalance]);
-
-  useEffect(() => {
-    setDisplayDate(date.slice(3, 5));
-  }, [date]);
 
   return (
     <div
