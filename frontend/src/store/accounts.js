@@ -125,6 +125,7 @@ export default function reducer (
     calendar: {},
     current: null,
     allLoaded: false,
+    currentLocked: null,
     currentLoaded: false,
     viewMode: null
   },
@@ -154,6 +155,11 @@ export default function reducer (
             balance
           }
         }
+      };
+    case LOCK_BALANCE:
+      return {
+        ...state,
+        currentLocked: { date, balance }
       };
     case VIEW_CALENDAR:
       return {
