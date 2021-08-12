@@ -22,10 +22,7 @@
     "extends": [
       "react-app",
       "react-app/jest"
-    ],
-    "rules": {
-      "default-param-last": "off"
-    }
+    ]
   },
   "browserslist": {
     "production": [
