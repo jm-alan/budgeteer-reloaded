@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { GetItemsByDate } from '../../../store/accounts';
+import { GetItemsByDate, GetLockedBalance } from '../../../store/accounts';
 
 const previousDateSelectGenerator = (date, previousDate) => state => {
   const prev = state.accounts.calendar[`${date.slice(0, 2)}/${previousDate}/${date.slice(6)}`] || null;
@@ -18,7 +18,10 @@ export default function Day ({ weekday, date, calendarRef }) {
   const prevBalance = useSelector(previousDateSelector);
   const items = useSelector(state => state.accounts.calendar[date]) ?? null;
   const currentAccount = useSelector(state => state.accounts.current);
+  const currentLocked = useSelector(state => state.accounts.currentLocked);
   const currentId = currentAccount && currentAccount.id;
+  const lockedDate = currentLocked && currentLocked.date;
+  const lockedBalance = currentLocked && currentLocked.balance;
 
   const [top, setInnerTop] = useState(null);
   const [bottom, setInnerBottom] = useState(null);
@@ -27,6 +30,7 @@ export default function Day ({ weekday, date, calendarRef }) {
   const [width, setInnerWidth] = useState(null);
   const [height, setInnerHeight] = useState(null);
   const [detailMode, setDetailMode] = useState(false);
+  const [balance, setBalance] = useState(null);
   const [resolvedParentRect, setResolvedParentRect] = useState(false);
 
   const freezeRef = useRef(null);
