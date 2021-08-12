@@ -16,6 +16,7 @@ const DESELECT = 'accounts/DESELECT';
 const VIEW_CALENDAR = 'accounts/VIEW_CALENDAR';
 const VIEW_ITEMS = 'accounts/VIEW_ITEMS';
 const RESOLVE_BALANCE = 'accounts/RESOLVE_BALANCE';
+const LOCK_BALANCE = 'accounts/LOCK_BALANCE';
 
 const setAccounts = accounts => ({
   type: LOAD_ALL,
@@ -48,6 +49,12 @@ const loadItems = items => ({
   items
 });
 
+const lockBalance = (date, balance) => ({
+  type: LOCK_BALANCE,
+  date,
+  balance
+});
+
 export const ResolveBalance = (date, balance) => ({
   type: RESOLVE_BALANCE,
   date,
@@ -66,6 +73,11 @@ export const SelectAccount = accountId => ({
 export const DeselectACcount = () => ({
   type: DESELECT
 });
+
+export const GetLockedBalance = (date, accountId) => async dispatch => {
+  const { balance } = await csrfetch.get(`/api/accounts/${accountId}/lockedbalance/`);
+  dispatch(lockBalance(date, balance));
+};
 
 export const GetAccounts = () => async dispatch => {
   const { accounts } = await csrfetch.get('/api/accounts/');
